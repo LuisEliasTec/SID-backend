@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose/dist/mongoose.module';
+import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { UserModule } from './entities/user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -12,14 +14,18 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (config: ConfigService) => ({
-        uri: `mongodb://${config.get('DB_SERVER_NAME')}:${config.get(
-          'DB_SERVER_PORT',
-        )}/${config.get('DB_NAME')}`,
+        uri: `mongodb://${config.get('MONGO_DB_USER')}:${config.get(
+          'MONGO_DB_PASSWORD',
+        )}@${config.get('MONGO_DB_SERVER_NAME')}:${config.get(
+          'MONGO_DB_PORT',
+        )}/${config.get('MONGO_DB_NAME')}?authSource=admin`,
         useNewUrlParser: true,
         useUnifiedTopology: true,
       }),
       inject: [ConfigService],
     }),
+    UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
