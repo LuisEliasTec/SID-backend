@@ -17,11 +17,11 @@ SERVER_PORT=3000 # Port Number
 SERVER_AUTH_KEY=example  # String for the authkey token
 SERVER_AUTH_SESSION_EXPIRATION=60000 # Integer number for session expiration
 
-DB_PORT=2707 # Database port, in this project uses mongodb.
-DB_NAME=example # Database name as String.
-DB_SERVER_NAME=localhost # Database host as a String.
-DB_USER=example # Database user as String.
-DB_USER_PASSWORD=example # Database password as String.
+MONGO_DB_USER=example # Database user as String.
+MONGO_DB_PASSWORD=example # Database password as String.
+MONGO_DB_SERVER_NAME=localhost # Database host as a String.
+MONGO_DB_PORT=2707 # Database port, in this project uses mongodb.
+MONGO_DB_NAME=example # Database name as String.
 ```
 
 ## Installation
