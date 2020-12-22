@@ -2,20 +2,22 @@ import { UserStatusEnum } from 'src/enums/user-status.enum';
 
 export class EmployeeDto {
   name: string;
-  birthDate: Date;
+  birthDate: string;
   age: BigInt;
-  phoneNumber: BigInt;
-  optionalPhoneNumber: BigInt;
+  phoneNumber: string;
+  optionalPhoneNumber: string;
   email: string;
   address: string;
+  postalCode: string;
   city: string;
   state: string;
-  // country: string;
+  country: string;
   curp: string;
   rfc: string;
   nss: string;
   // turn
   // working_hours
   // job_title
+  // photo
   status: UserStatusEnum;
 }

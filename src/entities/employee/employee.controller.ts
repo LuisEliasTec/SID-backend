@@ -7,6 +7,7 @@ import {
     Patch,
     Post,
 } from '@nestjs/common';
+import { info } from 'console';
 import { DataErrorMessage } from 'src/message-handling/data-error-message';
 import { SuccessDeleteMessage } from 'src/message-handling/success-delete.message';
 import { SuccessPostMessage } from 'src/message-handling/success-post.message';
@@ -19,13 +20,11 @@ export class EmployeeController {
     constructor(private readonly employeeService: EmployeeService) { }
 
     @Post('/create')
-    async createEmployee(@Body(PasswordEncryptPipe) body: EmployeeDto) {
+    async createEmployee(@Body() body: EmployeeDto) {
         try {
             const createdEmployee: any = await this.employeeService.create(body);
-            const noPasswordUser = createdEmployee._doc;
-            noPasswordUser.password = '';
             const successRequest = new SuccessPostMessage();
-            successRequest.data = noPasswordUser;
+            successRequest.data = createdEmployee._doc;
             return successRequest;
         } catch (e) {
             const errorException = new DataErrorMessage();
@@ -54,9 +53,9 @@ export class EmployeeController {
     @Get(':id')
     async getEmployee(@Param('id') id: string) {
         try {
-            const user: any = await this.employeeService.findById(id);
+            const employee: any = await this.employeeService.findById(id);
             const successRequest = new SuccessPostMessage();
-            successRequest.data = user._doc;
+            successRequest.data = employee._doc;
 
             return successRequest;
         } catch (e) {

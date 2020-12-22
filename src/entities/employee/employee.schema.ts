@@ -9,19 +9,69 @@ export type EmployeeDocument = Employee & Document;
 })
 export class Employee {
   @Prop({
+    required: [true, 'El nombre es requerido'],
+  })
+  name: string;
+
+  @Prop({
+    required: [true, 'El día de nacimiento es requerido'],
+  })
+  birthDate: string;
+
+  @Prop({
+    required: [false, ''],
+  })
+  phoneNumber: string;
+
+  @Prop({
+    required: [false, ''],
+  })
+  optionalPhoneNumber: string;
+
+  @Prop({
     required: [true, 'El correo electrónico es requerido'],
   })
   email: string;
 
   @Prop({
-    required: [true, 'La contraseña es requerida'],
+    required: [false, ''],
   })
-  password: string;
+  address: string;
 
   @Prop({
-    required: [true, 'El nombre de usuario es requerido'],
+    required: [false, ''],
   })
-  userName: string;
+  postalCode: string;
+
+  @Prop({
+    required: [false, ''],
+  })
+  city: string;
+
+  @Prop({
+    required: [false, ''],
+  })
+  state: string;
+
+  @Prop({
+    required: [false, ''],
+  })
+  country: string;
+
+  @Prop({
+    required: [false, ''],
+  })
+  curp: string;
+
+  @Prop({
+    required: [false, ''],
+  })
+  rfc: string;
+
+  @Prop({
+    required: [false, ''],
+  })
+  nss: string;
 
   @Prop({
     required: [false, 'El estatus es requerido'],

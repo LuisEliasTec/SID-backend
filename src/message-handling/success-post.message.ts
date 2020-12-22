@@ -5,7 +5,7 @@ export class SuccessPostMessage extends HttpException {
 
   constructor() {
     super('OK', 201);
-    this.message = 'Petición completada con exito.';
+    this.message = 'Petición completada con éxito.';
   }
 
   set data(data: any) {
