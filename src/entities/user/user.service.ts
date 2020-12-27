@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { paginator } from 'src/utils/paginator.util';
 import { UserDto } from './dtos/user.dto';
 import { User, UserDocument } from './user.schema';
 
@@ -13,8 +14,10 @@ export class UserService {
     return createdUser.save();
   }
 
-  async list(): Promise<User[]> {
-    return this.userModel.find().exec();
+  async list(queryParams): Promise<any> {
+    const { page, pageSize } = queryParams;
+
+    return paginator(this.userModel, parseInt(page), parseInt(pageSize));
   }
 
   async findById(id): Promise<User> {

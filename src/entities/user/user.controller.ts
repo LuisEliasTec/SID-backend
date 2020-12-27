@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { DataErrorMessage } from 'src/message-handling/data-error-message';
 import { SuccessDeleteMessage } from 'src/message-handling/success-delete.message';
@@ -36,9 +37,9 @@ export class UserController {
   }
 
   @Get('/list')
-  async getUsers() {
+  async getUsers(@Query() queryParams) {
     try {
-      const userList = await this.userService.list();
+      const userList = await this.userService.list(queryParams);
       const successRequest = new SuccessPostMessage();
       successRequest.data = userList;
 
