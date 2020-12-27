@@ -6,6 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './entities/user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { EmployeeModule } from './entities/employee/employee.module';
+import { TurnModule } from './entities/turn/turn.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { EmployeeModule } from './entities/employee/employee.module';
     }),
     UserModule,
     AuthModule,
-    EmployeeModule
+    EmployeeModule,
+    TurnModule
   ],
   controllers: [AppController],
   providers: [AppService],
