@@ -1,3 +1,4 @@
+import { Schema } from 'mongoose';
 import { UserStatusEnum } from 'src/enums/user-status.enum';
 
 export class EmployeeDto {
@@ -15,7 +16,7 @@ export class EmployeeDto {
   curp: string;
   rfc: string;
   nss: string;
-  // turn
+  _turn: string;
   // working_hours
   // job_title
   // photo

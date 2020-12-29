@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 import { UserStatusEnum } from 'src/enums/user-status.enum';
-
 export type EmployeeDocument = Employee & Document;
 
 @Schema({
@@ -74,9 +73,12 @@ export class Employee {
   nss: string;
 
   @Prop({
-    required: [false, 'El estatus es requerido'],
+    required: [true, 'El estatus es requerido'],
   })
   status: UserStatusEnum;
+
+  @Prop({ type: Types.ObjectId, ref: 'Turn', required: [true, 'El turno es requerido'] })
+  _turn: Types.ObjectId;
 }
 
 export const EmployeeSchema = SchemaFactory.createForClass(Employee);
