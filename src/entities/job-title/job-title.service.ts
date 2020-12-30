@@ -6,7 +6,9 @@ import { JobTitle, JobTitleDocument } from './job-title.schema';
 
 @Injectable()
 export class JobTitleService {
-  constructor(@InjectModel(JobTitle.name) private jobTitleModel: Model<JobTitleDocument>) {}
+  constructor(
+    @InjectModel(JobTitle.name) private jobTitleModel: Model<JobTitleDocument>,
+  ) {}
 
   async create(createJobTitleDto: JobTitleDto): Promise<JobTitle> {
     const createdJobTitle = new this.jobTitleModel(createJobTitleDto);

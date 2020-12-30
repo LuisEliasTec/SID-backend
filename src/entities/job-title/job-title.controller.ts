@@ -1,11 +1,11 @@
 import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    Param,
-    Patch,
-    Post,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
 import { DataErrorMessage } from 'src/message-handling/data-error-message';
 import { SuccessDeleteMessage } from 'src/message-handling/success-delete.message';
@@ -15,98 +15,98 @@ import { JobTitleService } from './job-title.service';
 
 @Controller('job-title')
 export class JobTitleController {
-    constructor(private readonly jobTitleService: JobTitleService) { }
+  constructor(private readonly jobTitleService: JobTitleService) {}
 
-    @Post('/create')
-    async createJobTitles(@Body() body: JobTitleDto) {
-        try {
-            const createdJobTitle: any = await this.jobTitleService.create(body);
-            const successRequest = new SuccessPostMessage();
-            successRequest.data = createdJobTitle._doc;
-            return successRequest;
-        } catch (e) {
-            const errorException = new DataErrorMessage();
-            errorException.errorData = e;
+  @Post('/create')
+  async createJobTitles(@Body() body: JobTitleDto) {
+    try {
+      const createdJobTitle: any = await this.jobTitleService.create(body);
+      const successRequest = new SuccessPostMessage();
+      successRequest.data = createdJobTitle._doc;
+      return successRequest;
+    } catch (e) {
+      const errorException = new DataErrorMessage();
+      errorException.errorData = e;
 
-            return errorException;
-        }
+      return errorException;
     }
+  }
 
-    @Get('/list')
-    async getJobTitles() {
-        try {
-            const JobTitleList = await this.jobTitleService.list();
-            const successRequest = new SuccessPostMessage();
-            successRequest.data = JobTitleList;
+  @Get('/list')
+  async getJobTitles() {
+    try {
+      const JobTitleList = await this.jobTitleService.list();
+      const successRequest = new SuccessPostMessage();
+      successRequest.data = JobTitleList;
 
-            return successRequest;
-        } catch (e) {
-            const errorException = new DataErrorMessage();
-            errorException.errorData = e;
+      return successRequest;
+    } catch (e) {
+      const errorException = new DataErrorMessage();
+      errorException.errorData = e;
 
-            return errorException;
-        }
+      return errorException;
     }
+  }
 
-    @Get(':id')
-    async getJobTitle(@Param('id') id: string) {
-        try {
-            const jobTitle: any = await this.jobTitleService.findById(id);
-            const successRequest = new SuccessPostMessage();
-            successRequest.data = jobTitle._doc;
+  @Get(':id')
+  async getJobTitle(@Param('id') id: string) {
+    try {
+      const jobTitle: any = await this.jobTitleService.findById(id);
+      const successRequest = new SuccessPostMessage();
+      successRequest.data = jobTitle._doc;
 
-            return successRequest;
-        } catch (e) {
-            const errorException = new DataErrorMessage();
-            errorException.errorData = e;
+      return successRequest;
+    } catch (e) {
+      const errorException = new DataErrorMessage();
+      errorException.errorData = e;
 
-            return errorException;
-        }
+      return errorException;
     }
+  }
 
-    @Delete(':id')
-    async deleteJobTitle(@Param('id') id: string) {
-        try {
-            const deletedJobTitle = await this.jobTitleService.delete(id);
-            const successRequest = new SuccessDeleteMessage();
-            successRequest.data = { _id: id };
+  @Delete(':id')
+  async deleteJobTitle(@Param('id') id: string) {
+    try {
+      const deletedJobTitle = await this.jobTitleService.delete(id);
+      const successRequest = new SuccessDeleteMessage();
+      successRequest.data = { _id: id };
 
-            if (deletedJobTitle.deletedCount === 0) {
-                successRequest.customMessage = 'zero';
-            }
+      if (deletedJobTitle.deletedCount === 0) {
+        successRequest.customMessage = 'zero';
+      }
 
-            return successRequest;
-        } catch (e) {
-            const errorException = new DataErrorMessage();
+      return successRequest;
+    } catch (e) {
+      const errorException = new DataErrorMessage();
 
-            if (e.kind === 'ObjectId') {
-                errorException.message = e.reason.message;
-            } else {
-                errorException.errorData = e;
-            }
+      if (e.kind === 'ObjectId') {
+        errorException.message = e.reason.message;
+      } else {
+        errorException.errorData = e;
+      }
 
-            return errorException;
-        }
+      return errorException;
     }
+  }
 
-    @Patch(':id')
-    async updateJobTitle(@Param('id') id: string, @Body() body: JobTitleDto) {
-        try {
-            const patchedJobTitle = await this.jobTitleService.update(id, body);
-            const successRequest = new SuccessPostMessage();
-            const modifiedData = {
-                updatedTurn: patchedJobTitle.nModified,
-                requestedId: id,
-            };
+  @Patch(':id')
+  async updateJobTitle(@Param('id') id: string, @Body() body: JobTitleDto) {
+    try {
+      const patchedJobTitle = await this.jobTitleService.update(id, body);
+      const successRequest = new SuccessPostMessage();
+      const modifiedData = {
+        updatedTurn: patchedJobTitle.nModified,
+        requestedId: id,
+      };
 
-            successRequest.data = modifiedData;
+      successRequest.data = modifiedData;
 
-            return successRequest;
-        } catch (e) {
-            const errorException = new DataErrorMessage();
-            errorException.errorData = e;
+      return successRequest;
+    } catch (e) {
+      const errorException = new DataErrorMessage();
+      errorException.errorData = e;
 
-            return errorException;
-        }
+      return errorException;
     }
+  }
 }

@@ -5,11 +5,11 @@ import { Turn, TurnSchema } from './turn.schema';
 import { TurnService } from './turn.service';
 
 @Module({
-    imports: [
-        MongooseModule.forFeature([{ name: Turn.name, schema: TurnSchema }]),
-    ],
-    controllers: [TurnController],
-    providers: [TurnService],
-    exports: [TurnService],
+  imports: [
+    MongooseModule.forFeature([{ name: Turn.name, schema: TurnSchema }]),
+  ],
+  controllers: [TurnController],
+  providers: [TurnService],
+  exports: [TurnService],
 })
-export class TurnModule { }
+export class TurnModule {}

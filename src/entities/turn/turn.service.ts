@@ -4,7 +4,6 @@ import { Model } from 'mongoose';
 import { TurnDto } from './dtos/turn.dto';
 import { Turn, TurnDocument } from './turn.schema';
 
-
 @Injectable()
 export class TurnService {
   constructor(@InjectModel(Turn.name) private turnModel: Model<TurnDocument>) {}

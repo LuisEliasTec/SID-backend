@@ -12,9 +12,7 @@ export class JobTitle {
   })
   name: string;
 
-  @Prop({
-    required: [false, ''],
-  })
+  @Prop()
   description: string;
 }
 

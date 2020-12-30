@@ -1,24 +1,21 @@
-import { Schema } from 'mongoose';
+import { Turn } from 'src/entities/turn/turn.schema';
 import { UserStatusEnum } from 'src/enums/user-status.enum';
 
 export class EmployeeDto {
   name: string;
   birthDate: string;
-  age: BigInt;
+  age: number;
   phoneNumber: string;
   optionalPhoneNumber: string;
   email: string;
   address: string;
-  postalCode: string;
+  zipCode: string;
   city: string;
   state: string;
   country: string;
   curp: string;
   rfc: string;
   nss: string;
-  _turn: string;
-  // working_hours
-  // job_title
-  // photo
+  turn: Turn[];
   status: UserStatusEnum;
 }

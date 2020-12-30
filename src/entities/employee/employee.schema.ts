@@ -1,6 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { UserStatusEnum } from 'src/enums/user-status.enum';
+import { Turn } from '../turn/turn.schema';
+
 export type EmployeeDocument = Employee & Document;
 
 @Schema({
@@ -17,59 +19,40 @@ export class Employee {
   })
   birthDate: string;
 
-  @Prop({
-    required: [false, ''],
-  })
+  @Prop()
   phoneNumber: string;
 
-  @Prop({
-    required: [false, ''],
-  })
+  @Prop()
   optionalPhoneNumber: string;
 
-  @Prop({
-    required: [true, 'El correo electrónico es requerido'],
-  })
+  @Prop()
   email: string;
 
-  @Prop({
-    required: [false, ''],
-  })
+  @Prop()
+  age: number;
+
+  @Prop()
   address: string;
 
-  @Prop({
-    required: [false, ''],
-  })
-  postalCode: string;
+  @Prop()
+  zipCode: string;
 
-  @Prop({
-    required: [false, ''],
-  })
+  @Prop()
   city: string;
 
-  @Prop({
-    required: [false, ''],
-  })
+  @Prop()
   state: string;
 
-  @Prop({
-    required: [false, ''],
-  })
+  @Prop()
   country: string;
 
-  @Prop({
-    required: [false, ''],
-  })
+  @Prop()
   curp: string;
 
-  @Prop({
-    required: [false, ''],
-  })
+  @Prop()
   rfc: string;
 
-  @Prop({
-    required: [false, ''],
-  })
+  @Prop()
   nss: string;
 
   @Prop({
@@ -77,8 +60,16 @@ export class Employee {
   })
   status: UserStatusEnum;
 
-  @Prop({ type: Types.ObjectId, ref: 'Turn', required: [true, 'El turno es requerido'] })
-  _turn: Types.ObjectId;
+  @Prop({
+    type: [
+      {
+        type: Types.ObjectId,
+        ref: 'Turn',
+      },
+    ],
+    required: [true, 'El turno es requerido'],
+  })
+  turn: Turn[];
 }
 
 export const EmployeeSchema = SchemaFactory.createForClass(Employee);

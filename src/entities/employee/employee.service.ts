@@ -6,7 +6,9 @@ import { Employee, EmployeeDocument } from './employee.schema';
 
 @Injectable()
 export class EmployeeService {
-  constructor(@InjectModel(Employee.name) private employeeModel: Model<EmployeeDocument>) {}
+  constructor(
+    @InjectModel(Employee.name) private employeeModel: Model<EmployeeDocument>,
+  ) {}
 
   async create(createEmployeeDto: EmployeeDto): Promise<Employee> {
     const createdEmployee = new this.employeeModel(createEmployeeDto);

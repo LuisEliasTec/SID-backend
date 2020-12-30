@@ -31,7 +31,7 @@ import { JobTitleModule } from './entities/job-title/job-title.module';
     AuthModule,
     EmployeeModule,
     TurnModule,
-    JobTitleModule
+    JobTitleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
