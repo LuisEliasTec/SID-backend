@@ -1,7 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { UserStatusEnum } from 'src/enums/user-status.enum';
-import { Turn } from '../turn/turn.schema';
+import { Turn } from '../../turn/turn.schema';
+import { Address } from './address.schema';
 
 export type EmployeeDocument = Employee & Document;
 
@@ -32,7 +33,7 @@ export class Employee {
   age: number;
 
   @Prop()
-  address: string;
+  address: Address;
 
   @Prop()
   zipCode: string;
