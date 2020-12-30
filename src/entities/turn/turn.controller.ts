@@ -7,24 +7,22 @@ import {
     Patch,
     Post,
 } from '@nestjs/common';
-import { info } from 'console';
 import { DataErrorMessage } from 'src/message-handling/data-error-message';
 import { SuccessDeleteMessage } from 'src/message-handling/success-delete.message';
 import { SuccessPostMessage } from 'src/message-handling/success-post.message';
-import { PasswordEncryptPipe } from 'src/pipes/password-encrypt.pipe';
-import { EmployeeDto } from './dtos/employee.dto';
-import { EmployeeService } from './employee.service';
+import { TurnDto } from './dtos/turn.dto';
+import { TurnService } from './turn.service';
 
-@Controller('employee')
-export class EmployeeController {
-    constructor(private readonly employeeService: EmployeeService) { }
+@Controller('turn')
+export class TurnController {
+    constructor(private readonly turnService: TurnService) { }
 
     @Post('/create')
-    async createEmployee(@Body() body: EmployeeDto) {
+    async createTurn(@Body() body: TurnDto) {
         try {
-            const createdEmployee: any = await this.employeeService.create(body);
+            const createdTurn: any = await this.turnService.create(body);
             const successRequest = new SuccessPostMessage();
-            successRequest.data = createdEmployee._doc;
+            successRequest.data = createdTurn._doc;
             return successRequest;
         } catch (e) {
             const errorException = new DataErrorMessage();
@@ -35,11 +33,11 @@ export class EmployeeController {
     }
 
     @Get('/list')
-    async getEmployees() {
+    async getTurns() {
         try {
-            const EmployeeList = await this.employeeService.list();
+            const TurnList = await this.turnService.list();
             const successRequest = new SuccessPostMessage();
-            successRequest.data = EmployeeList;
+            successRequest.data = TurnList;
 
             return successRequest;
         } catch (e) {
@@ -51,11 +49,11 @@ export class EmployeeController {
     }
 
     @Get(':id')
-    async getEmployee(@Param('id') id: string) {
+    async getTurn(@Param('id') id: string) {
         try {
-            const employee: any = await this.employeeService.findById(id);
+            const turn: any = await this.turnService.findById(id);
             const successRequest = new SuccessPostMessage();
-            successRequest.data = employee._doc;
+            successRequest.data = turn._doc;
 
             return successRequest;
         } catch (e) {
@@ -67,13 +65,13 @@ export class EmployeeController {
     }
 
     @Delete(':id')
-    async deleteEmployee(@Param('id') id: string) {
+    async deleteTurn(@Param('id') id: string) {
         try {
-            const deletedEmployee = await this.employeeService.delete(id);
+            const deletedTurn = await this.turnService.delete(id);
             const successRequest = new SuccessDeleteMessage();
             successRequest.data = { _id: id };
 
-            if (deletedEmployee.deletedCount === 0) {
+            if (deletedTurn.deletedCount === 0) {
                 successRequest.customMessage = 'zero';
             }
 
@@ -92,12 +90,12 @@ export class EmployeeController {
     }
 
     @Patch(':id')
-    async updateEmployee(@Param('id') id: string, @Body() body: EmployeeDto) {
+    async updateTurn(@Param('id') id: string, @Body() body: TurnDto) {
         try {
-            const patchedEmployee = await this.employeeService.update(id, body);
+            const patchedTurn = await this.turnService.update(id, body);
             const successRequest = new SuccessPostMessage();
             const modifiedData = {
-                updatedEmployee: patchedEmployee.nModified,
+                updatedTurn: patchedTurn.nModified,
                 requestedId: id,
             };
 

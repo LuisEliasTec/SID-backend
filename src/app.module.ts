@@ -5,6 +5,9 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './entities/user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { EmployeeModule } from './entities/employee/employee.module';
+import { TurnModule } from './entities/turn/turn.module';
+import { JobTitleModule } from './entities/job-title/job-title.module';
 
 @Module({
   imports: [
@@ -26,6 +29,9 @@ import { AuthModule } from './auth/auth.module';
     }),
     UserModule,
     AuthModule,
+    EmployeeModule,
+    TurnModule,
+    JobTitleModule
   ],
   controllers: [AppController],
   providers: [AppService],
