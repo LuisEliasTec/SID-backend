@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { User, UserDocument } from '../user/user.schema';
 import { PermissionDto } from './dtos/permission.dto';
 import { RoleDto } from './dtos/role.dto';
 import { Permission, PermissionDocument } from './models/permission.schema';
@@ -12,7 +13,22 @@ export class RoleService {
     @InjectModel(Role.name) private roleModel: Model<RoleDocument>,
     @InjectModel(Permission.name)
     private permissionModel: Model<PermissionDocument>,
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
   ) {}
+
+  //====== Roles ======//
+  async addRoleToUser(roleid: string, userid: string): Promise<any> {
+    const updatedUser = await this.userModel.updateOne(
+      { _id: userid },
+      { role: roleid },
+    );
+
+    if (!updatedUser) {
+      throw new NotFoundException(`User with ID "${userid}" not found.`);
+    }
+
+    return updatedUser;
+  }
 
   //====== Permissions ======//
   async createPermission(createPermission: PermissionDto): Promise<Permission> {

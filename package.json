@@ -6,6 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "import-permissions": "mongoimport --db definxi --collection permissions < ./database/permissions.json --jsonArray  --authenticationDatabase admin --username root --password 12341234",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

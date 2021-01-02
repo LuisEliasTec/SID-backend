@@ -12,9 +12,6 @@ export class Permission {
 
   @Prop()
   slug: string;
-
-  @Prop()
-  path: string;
 }
 
 export const PermissionSchema = SchemaFactory.createForClass(Permission);

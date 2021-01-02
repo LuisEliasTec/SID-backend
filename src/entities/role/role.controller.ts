@@ -10,22 +10,23 @@ import {
 import { DataErrorMessage } from 'src/message-handling/data-error-message';
 import { SuccessDeleteMessage } from 'src/message-handling/success-delete.message';
 import { SuccessPostMessage } from 'src/message-handling/success-post.message';
-import { PermissionDto } from './dtos/permission.dto';
 import { AddPermissionsDto, RoleDto } from './dtos/role.dto';
 import { RoleService } from './role.service';
 
 @Controller('role')
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
-  @Patch('/add/permission/:id')
-  async addPermissionToRole(
-    @Param('id') id: string,
-    @Body() body: AddPermissionsDto,
+
+  //====== Users ======//
+  @Patch('/:roleid/add-to-user/:userid')
+  async addRoleToUser(
+    @Param('roleid') roleid: string,
+    @Param('userid') userid: string,
   ) {
     try {
-      const createdPermission: any = await this.roleService.addPermissionToRole(
-        id,
-        body.permissions,
+      const createdPermission: any = await this.roleService.addRoleToUser(
+        roleid,
+        userid,
       );
 
       const successRequest = new SuccessPostMessage();
@@ -39,11 +40,16 @@ export class RoleController {
     }
   }
 
-  @Post('/create/permission')
-  async createTurnPermission(@Body() body: PermissionDto) {
+  //====== Permissions =======//
+  @Patch('/add/permission/:id')
+  async addPermissionToRole(
+    @Param('id') id: string,
+    @Body() body: AddPermissionsDto,
+  ) {
     try {
-      const createdPermission: any = await this.roleService.createPermission(
-        body,
+      const createdPermission: any = await this.roleService.addPermissionToRole(
+        id,
+        body.permissions,
       );
 
       const successRequest = new SuccessPostMessage();
