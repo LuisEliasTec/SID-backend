@@ -15,12 +15,12 @@ export class Turn {
   @Prop({
     required: [true, 'La hora de inicio es requerida'],
   })
-  startHour: string;
+  startHour: Date;
 
   @Prop({
     required: [true, 'La hora final es requerida'],
   })
-  endHour: string;
+  endHour: Date;
 }
 
 export const TurnSchema = SchemaFactory.createForClass(Turn);
