@@ -6,7 +6,12 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { PermissionsGuard } from 'src/auth/guards/permissions.guard';
+import { RequirePermissions } from 'src/decorators/require-permissions.decorator';
+import { Permissions } from 'src/enums/permissions.enum';
 import { DataErrorMessage } from 'src/message-handling/data-error-message';
 import { SuccessDeleteMessage } from 'src/message-handling/success-delete.message';
 import { SuccessPostMessage } from 'src/message-handling/success-post.message';
@@ -18,6 +23,8 @@ export class EmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
 
   @Post('/create')
+  @RequirePermissions(Permissions.CREATE_EMPLOYEE)
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   async createEmployee(@Body() body: EmployeeDto) {
     try {
       const createdEmployee: any = await this.employeeService.create(body);
@@ -33,6 +40,8 @@ export class EmployeeController {
   }
 
   @Get('/list')
+  @RequirePermissions(Permissions.READ_EMPLOYEE)
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   async getEmployees() {
     try {
       const EmployeeList = await this.employeeService.list();
@@ -49,6 +58,8 @@ export class EmployeeController {
   }
 
   @Get(':id')
+  @RequirePermissions(Permissions.READ_EMPLOYEE)
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   async getEmployee(@Param('id') id: string) {
     try {
       const employee: any = await this.employeeService.findById(id);
@@ -64,6 +75,8 @@ export class EmployeeController {
     }
   }
 
+  @RequirePermissions(Permissions.DELETE_EMPLOYEE)
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Delete(':id')
   async deleteEmployee(@Param('id') id: string) {
     try {
@@ -89,6 +102,8 @@ export class EmployeeController {
     }
   }
 
+  @RequirePermissions(Permissions.UPDATE_EMPLOYEE)
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Patch(':id')
   async updateEmployee(@Param('id') id: string, @Body() body: EmployeeDto) {
     try {

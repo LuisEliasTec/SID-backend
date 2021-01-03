@@ -3,14 +3,14 @@ import { ConfigModule } from '@nestjs/config/dist/config.module';
 import { ConfigService } from '@nestjs/config/dist/config.service';
 import { JwtModule } from '@nestjs/jwt/dist/jwt.module';
 import { PassportModule } from '@nestjs/passport';
-import { UserModule } from 'src/entities/user/user.module';
+import { UserDependenciesModule } from 'src/entities/user/user-dependecies.module';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
 
 @Module({
   imports: [
-    UserModule,
+    UserDependenciesModule,
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
