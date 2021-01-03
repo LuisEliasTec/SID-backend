@@ -20,8 +20,11 @@ export class UserService {
     return paginator(this.userModel, parseInt(page), parseInt(pageSize));
   }
 
-  async findById(id): Promise<User> {
-    return this.userModel.findById(id).exec();
+  async findById(id): Promise<UserDocument> {
+    return this.userModel
+      .findById(id)
+      .populate([{ path: 'role', populate: { path: 'permissions' } }])
+      .exec();
   }
 
   async delete(id: string) {

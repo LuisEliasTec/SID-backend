@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Crear usuario",
+    "slug": "CREATE_USER"
+  },
+  {
+    "name": "Leer usuario",
+    "slug": "READ_USER"
+  },
+  {
+    "name": "Actualizar usuario",
+    "slug": "UPDATE_USER"
+  },
+  {
+    "name": "Eliminar usuario",
+    "slug": "DELETE_USER"
+  }
+]

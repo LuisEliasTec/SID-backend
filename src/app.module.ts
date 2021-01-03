@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { EmployeeModule } from './entities/employee/employee.module';
 import { TurnModule } from './entities/turn/turn.module';
 import { JobTitleModule } from './entities/job-title/job-title.module';
+import { RoleModule } from './entities/role/role.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { JobTitleModule } from './entities/job-title/job-title.module';
     EmployeeModule,
     TurnModule,
     JobTitleModule,
+    RoleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
