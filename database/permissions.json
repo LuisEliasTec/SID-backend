@@ -14,5 +14,21 @@
   {
     "name": "Eliminar usuario",
     "slug": "DELETE_USER"
+  },
+  {
+    "name": "Crear empleado",
+    "slug": "CREATE_EMPLOYEE"
+  },
+  {
+    "name": "Eliminar empleado",
+    "slug": "DELETE_EMPLOYEE"
+  },
+  {
+    "name": "Actualizar empleado",
+    "slug": "UPDATE_EMPLOYEE"
+  },
+  {
+    "name": "Leer empleado",
+    "slug": "READ_EMPLOYEE"
   }
 ]
