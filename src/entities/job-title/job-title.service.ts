@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { JobTitleDto } from './dtos/job-title.dto';
 import { JobTitle, JobTitleDocument } from './job-title.schema';
+import { paginator } from 'src/utils/paginator.util';
 
 @Injectable()
 export class JobTitleService {
@@ -15,8 +16,14 @@ export class JobTitleService {
     return createdJobTitle.save();
   }
 
-  async list(): Promise<JobTitle[]> {
-    return this.jobTitleModel.find().exec();
+  // async list(): Promise<JobTitle[]> {
+  //   return this.jobTitleModel.find().exec();
+  // }
+
+  async list(queryParams): Promise<any> {
+    const { page, pageSize } = queryParams;
+
+    return paginator(this.jobTitleModel, parseInt(page), parseInt(pageSize));
   }
 
   async findById(id): Promise<JobTitle> {

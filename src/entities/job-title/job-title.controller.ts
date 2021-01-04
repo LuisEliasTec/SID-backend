@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { DataErrorMessage } from 'src/message-handling/data-error-message';
 import { SuccessDeleteMessage } from 'src/message-handling/success-delete.message';
@@ -33,9 +34,9 @@ export class JobTitleController {
   }
 
   @Get('/list')
-  async getJobTitles() {
+  async getJobTitles(@Query() queryParams) {
     try {
-      const JobTitleList = await this.jobTitleService.list();
+      const JobTitleList = await this.jobTitleService.list(queryParams);
       const successRequest = new SuccessPostMessage();
       successRequest.data = JobTitleList;
 

@@ -35,17 +35,17 @@ export class Employee {
   @Prop()
   address: Address;
 
-  @Prop()
-  zipCode: string;
+  // @Prop()
+  // zipCode: string;
 
-  @Prop()
-  city: string;
+  // @Prop()
+  // city: string;
 
-  @Prop()
-  state: string;
+  // @Prop()
+  // state: string;
 
-  @Prop()
-  country: string;
+  // @Prop()
+  // country: string;
 
   @Prop()
   curp: string;
@@ -61,16 +61,16 @@ export class Employee {
   })
   status: UserStatusEnum;
 
-  @Prop({
-    type: [
-      {
-        type: Types.ObjectId,
-        ref: 'Turn',
-      },
-    ],
-    required: [true, 'El turno es requerido'],
-  })
-  turn: Turn[];
+  // @Prop({
+  //   type: [
+  //     {
+  //       type: Types.ObjectId,
+  //       ref: 'Turn',
+  //     },
+  //   ],
+  //   required: [true, 'El turno es requerido'],
+  // })
+  // turn: Turn[];
 }
 
 export const EmployeeSchema = SchemaFactory.createForClass(Employee);

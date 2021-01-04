@@ -10,10 +10,10 @@ export class EmployeeDto {
   optionalPhoneNumber: string;
   email: string;
   address: Address;
-  zipCode: string;
-  city: string;
-  state: string;
-  country: string;
+  // zipCode: string;
+  // city: string;
+  // state: string;
+  // country: string;
   curp: string;
   rfc: string;
   nss: string;

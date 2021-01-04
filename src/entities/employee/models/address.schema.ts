@@ -12,7 +12,22 @@ export class Address {
   interiorNumber: number;
 
   @Prop()
+  exteriorNumber: number;
+
+  @Prop()
   neighborhood: string;
+
+  @Prop()
+  zipCode: number;
+
+  @Prop()
+  city: number;
+
+  @Prop()
+  state: number;
+
+  @Prop()
+  country: number;
 }
 
 export const AddressSchema = SchemaFactory.createForClass(Address);
