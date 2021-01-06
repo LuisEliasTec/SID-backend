@@ -7,7 +7,12 @@ import {
   Patch,
   Post,
   Query,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
+import { Request } from 'express';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { User } from 'src/decorators/user.decorator';
 import { DataErrorMessage } from 'src/message-handling/data-error-message';
 import { SuccessDeleteMessage } from 'src/message-handling/success-delete.message';
 import { SuccessPostMessage } from 'src/message-handling/success-post.message';
@@ -27,6 +32,23 @@ export class UserController {
       noPasswordUser.password = '';
       const successRequest = new SuccessPostMessage();
       successRequest.data = noPasswordUser;
+      return successRequest;
+    } catch (e) {
+      const errorException = new DataErrorMessage();
+      errorException.errorData = e;
+
+      return errorException;
+    }
+  }
+
+  @Get('/permissions-list')
+  @UseGuards(JwtAuthGuard)
+  async permissionsByUser(@User() user) {
+    try {
+      const permissions = await this.userService.permissionsByUser(user.userId);
+      const successRequest = new SuccessPostMessage();
+      successRequest.data = permissions;
+
       return successRequest;
     } catch (e) {
       const errorException = new DataErrorMessage();
