@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { paginator } from 'src/utils/paginator.util';
@@ -37,5 +37,19 @@ export class UserService {
 
   async findByEmail(email: string) {
     return this.userModel.findOne({ email: email }).exec();
+  }
+
+  async permissionsByUser(userId: string) {
+    const user = await this.userModel
+      .findById(userId)
+      .populate([{ path: 'role', populate: { path: 'permissions' } }]);
+
+    if (!user) {
+      throw new NotFoundException(`Resource with id ${userId} not found`);
+    }
+
+    const permissions = user.get('role').permissions;
+
+    return permissions;
   }
 }
