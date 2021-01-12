@@ -25,6 +25,7 @@ import { RoleModule } from './entities/role/role.module';
         )}/${config.get('MONGO_DB_NAME')}?authSource=admin`,
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        useCreateIndex: true,
       }),
       inject: [ConfigService],
     }),
