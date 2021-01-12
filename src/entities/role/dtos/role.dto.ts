@@ -4,5 +4,6 @@ export class RoleDto {
 }
 
 export class AddPermissionsDto {
+  module: string;
   permissions: string[];
 }
