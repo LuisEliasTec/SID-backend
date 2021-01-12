@@ -10,8 +10,8 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.userService.findByEmail(email);
+  async validateUser(userName: string, password: string): Promise<any> {
+    const user = await this.userService.findByUsername(userName);
 
     if (!user) {
       return null;
@@ -30,7 +30,7 @@ export class AuthService {
 
   async login(user: any) {
     const payload = {
-      username: user._doc.email,
+      username: user._doc.userName,
       sub: user._doc._id.toString(),
     };
     return {

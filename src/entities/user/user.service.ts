@@ -35,8 +35,8 @@ export class UserService {
     return this.userModel.updateOne({ _id: id }, updateUserDto).exec();
   }
 
-  async findByEmail(email: string) {
-    return this.userModel.findOne({ email: email }).exec();
+  async findByUsername(userName: string) {
+    return this.userModel.findOne({ userName }).exec();
   }
 
   async permissionsByUser(userId: string) {
