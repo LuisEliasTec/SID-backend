@@ -23,6 +23,7 @@ export class UserService {
   async findById(id): Promise<UserDocument> {
     return this.userModel
       .findById(id)
+      .select('-password')
       .populate([{ path: 'role', populate: { path: 'permissions' } }])
       .exec();
   }

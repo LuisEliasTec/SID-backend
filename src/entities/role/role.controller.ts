@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { DataErrorMessage } from 'src/message-handling/data-error-message';
 import { SuccessDeleteMessage } from 'src/message-handling/success-delete.message';
@@ -98,9 +99,9 @@ export class RoleController {
   }
 
   @Get('/list')
-  async getRoles() {
+  async getRoles(@Query('searchTerm') searchTerm: string) {
     try {
-      const RoleList = await this.roleService.list();
+      const RoleList = await this.roleService.list(searchTerm);
       const successRequest = new SuccessPostMessage();
       successRequest.data = RoleList;
 

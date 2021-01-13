@@ -125,8 +125,11 @@ export class RoleService {
     return createdRole.save();
   }
 
-  async list(): Promise<Role[]> {
-    return this.roleModel.find().populate('permissions').exec();
+  async list(params?: any): Promise<Role[]> {
+    return this.roleModel
+      .find({ name: { $regex: new RegExp(params, 'i') } })
+      .populate('permissions')
+      .exec();
   }
 
   async findById(id): Promise<Role> {
