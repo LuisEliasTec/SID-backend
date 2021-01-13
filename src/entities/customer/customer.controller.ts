@@ -16,21 +16,21 @@ import { Permissions } from 'src/enums/permissions.enum';
 import { DataErrorMessage } from 'src/message-handling/data-error-message';
 import { SuccessDeleteMessage } from 'src/message-handling/success-delete.message';
 import { SuccessPostMessage } from 'src/message-handling/success-post.message';
-import { EmployeeDto } from './dtos/employee.dto';
-import { EmployeeService } from './employee.service';
+import { CustomerService } from './customer.service';
+import { CustomerDto } from './dtos/customer.dto';
 
-@Controller('employee')
-export class EmployeeController {
-  constructor(private readonly employeeService: EmployeeService) {}
+@Controller('customer')
+export class CustomerController {
+  constructor(private readonly customerService: CustomerService) {}
 
   @Post('/create')
   @RequirePermissions(Permissions.CREATE_EMPLOYEE)
   // @UseGuards(JwtAuthGuard, PermissionsGuard)
-  async createEmployee(@Body() body: EmployeeDto) {
+  async createCustomer(@Body() body: CustomerDto) {
     try {
-      const createdEmployee: any = await this.employeeService.create(body);
+      const createdCustomer: any = await this.customerService.create(body);
       const successRequest = new SuccessPostMessage();
-      successRequest.data = createdEmployee._doc;
+      successRequest.data = createdCustomer._doc;
       return successRequest;
     } catch (e) {
       const errorException = new DataErrorMessage();
@@ -42,12 +42,12 @@ export class EmployeeController {
 
   @Get('/list')
   @RequirePermissions(Permissions.READ_EMPLOYEE)
-  @UseGuards(JwtAuthGuard, PermissionsGuard)
-  async getEmployees(@Query() queryParams) {
+  // @UseGuards(JwtAuthGuard, PermissionsGuard)
+  async getCustomers(@Query() queryParams) {
     try {
-      const EmployeeList = await this.employeeService.list(queryParams);
+      const CustomerList = await this.customerService.list(queryParams);
       const successRequest = new SuccessPostMessage();
-      successRequest.data = EmployeeList;
+      successRequest.data = CustomerList;
 
       return successRequest;
     } catch (e) {
@@ -59,13 +59,13 @@ export class EmployeeController {
   }
 
   @Get(':id')
-  @RequirePermissions(Permissions.READ_EMPLOYEE)
+  // @RequirePermissions(Permissions.READ_EMPLOYEE)
   // @UseGuards(JwtAuthGuard, PermissionsGuard)
-  async getEmployee(@Param('id') id: string) {
+  async getCustomer(@Param('id') id: string) {
     try {
-      const employee: any = await this.employeeService.findById(id);
+      const customer: any = await this.customerService.findById(id);
       const successRequest = new SuccessPostMessage();
-      successRequest.data = employee._doc;
+      successRequest.data = customer._doc;
 
       return successRequest;
     } catch (e) {
@@ -79,13 +79,13 @@ export class EmployeeController {
   @RequirePermissions(Permissions.DELETE_EMPLOYEE)
   // @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Delete(':id')
-  async deleteEmployee(@Param('id') id: string) {
+  async deleteCustomer(@Param('id') id: string) {
     try {
-      const deletedEmployee = await this.employeeService.delete(id);
+      const deletedCustomer = await this.customerService.delete(id);
       const successRequest = new SuccessDeleteMessage();
       successRequest.data = { _id: id };
 
-      if (deletedEmployee.deletedCount === 0) {
+      if (deletedCustomer.deletedCount === 0) {
         successRequest.customMessage = 'zero';
       }
 
@@ -106,12 +106,12 @@ export class EmployeeController {
   @RequirePermissions(Permissions.UPDATE_EMPLOYEE)
   // @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Patch(':id')
-  async updateEmployee(@Param('id') id: string, @Body() body: EmployeeDto) {
+  async updateCustomer(@Param('id') id: string, @Body() body: CustomerDto) {
     try {
-      const patchedEmployee = await this.employeeService.update(id, body);
+      const patchedCustomer = await this.customerService.update(id, body);
       const successRequest = new SuccessPostMessage();
       const modifiedData = {
-        updatedEmployee: patchedEmployee.nModified,
+        updatedEmployee: patchedCustomer.nModified,
         requestedId: id,
       };
 

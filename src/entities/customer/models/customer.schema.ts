@@ -1,24 +1,32 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { JobTitle } from 'src/entities/job-title/job-title.schema';
+import { CustomerTypeEnum } from 'src/enums/customer-type.enum';
 import { UserStatusEnum } from 'src/enums/user-status.enum';
-import { Turn } from '../../turn/turn.schema';
 import { Address } from './address.schema';
+import { TaxInformation } from './taxInformation.schema';
 
-export type EmployeeDocument = Employee & Document;
+export type CustomerDocument = Customer & Document;
 
 @Schema({
   timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' },
 })
-export class Employee {
+export class Customer {
   @Prop({
     required: [true, 'El nombre es requerido'],
   })
   name: string;
 
   @Prop({
-    required: [true, 'El día de nacimiento es requerido'],
+    required: [true, 'El apellido paterno es requerido'],
   })
+  firstName: string;
+
+  @Prop({
+    required: [true, 'El apellido materno es requerido'],
+  })
+  secondName: string;
+
+  @Prop()
   birthDate: string;
 
   @Prop()
@@ -50,27 +58,13 @@ export class Employee {
   })
   status: UserStatusEnum;
 
-  @Prop({
-    type: [
-      {
-        type: Types.ObjectId,
-        ref: 'Turn',
-      },
-    ],
-    required: [true, 'El turno es requerido'],
-  })
-  turn: Turn[];
+  @Prop()
+  taxInformation: TaxInformation;
 
   @Prop({
-    type: [
-      {
-        type: Types.ObjectId,
-        ref: 'JobTitle',
-      },
-    ],
-    required: [true, 'El puesto laboral es requerido'],
+    required: [true, 'El tipo de cliente es requerido'],
   })
-  jobTitle: JobTitle[];
+  customerType: CustomerTypeEnum;
 }
 
-export const EmployeeSchema = SchemaFactory.createForClass(Employee);
+export const CustomerSchema = SchemaFactory.createForClass(Customer);
