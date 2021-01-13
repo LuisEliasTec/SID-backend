@@ -26,6 +26,7 @@ import { CustomerModule } from './entities/customer/customer.module';
         )}/${config.get('MONGO_DB_NAME')}?authSource=admin`,
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        useCreateIndex: true,
       }),
       inject: [ConfigService],
     }),

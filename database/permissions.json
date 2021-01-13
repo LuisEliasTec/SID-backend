@@ -1,34 +1,87 @@
 [
   {
+    "name": "Super usuario",
+    "slug": "SUPER_USER",
+    "module": "all"
+  },
+  {
     "name": "Crear usuario",
-    "slug": "CREATE_USER"
+    "slug": "CREATE_USER",
+    "module": "users"
   },
   {
     "name": "Leer usuario",
-    "slug": "READ_USER"
+    "slug": "READ_USER",
+    "module": "users"
   },
   {
     "name": "Actualizar usuario",
-    "slug": "UPDATE_USER"
+    "slug": "UPDATE_USER",
+    "module": "users"
   },
   {
     "name": "Eliminar usuario",
-    "slug": "DELETE_USER"
+    "slug": "DELETE_USER",
+    "module": "users"
   },
   {
     "name": "Crear empleado",
-    "slug": "CREATE_EMPLOYEE"
+    "slug": "CREATE_EMPLOYEE",
+    "module": "employees"
   },
   {
     "name": "Eliminar empleado",
-    "slug": "DELETE_EMPLOYEE"
+    "slug": "DELETE_EMPLOYEE",
+    "module": "employees"
   },
   {
     "name": "Actualizar empleado",
-    "slug": "UPDATE_EMPLOYEE"
+    "slug": "UPDATE_EMPLOYEE",
+    "module": "employees"
   },
   {
     "name": "Leer empleado",
-    "slug": "READ_EMPLOYEE"
+    "slug": "READ_EMPLOYEE",
+    "module": "employees"
+  },
+  {
+    "name": "Leer rol",
+    "slug": "READ_ROLE",
+    "module": "roles"
+  },
+  {
+    "name": "Crear rol",
+    "slug": "CREATE_ROLE",
+    "module": "roles"
+  },
+  {
+    "name": "Editar rol",
+    "slug": "UPDATE_ROLE",
+    "module": "roles"
+  },
+  {
+    "name": "Eliminar rol",
+    "slug": "DELETE_ROLE",
+    "module": "roles"
+  },
+  {
+    "name": "Crear cita",
+    "slug": "CREATE_APPOINTMENT",
+    "module": "appointments"
+  },
+  {
+    "name": "Eliminar Cita",
+    "slug": "DELETE_APPOINTMENT",
+    "module": "appointments"
+  },
+  {
+    "name": "Leer Cita",
+    "slug": "READ_APPOINTMENT",
+    "module": "appointments"
+  },
+  {
+    "name": "Actualizar cita",
+    "slug": "UPDATE_APPOINTMENT",
+    "module": "appointments"
   }
 ]

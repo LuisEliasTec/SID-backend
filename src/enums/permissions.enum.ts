@@ -1,4 +1,7 @@
 export enum Permissions {
+  //====== Admin ======//
+  SUPER_USER = 'SUPER_USER',
+
   //====== User permissions ======//
   CREATE_USER = 'CREATE_USER',
   READ_USER = 'READ_USER',
@@ -10,4 +13,16 @@ export enum Permissions {
   DELETE_EMPLOYEE = 'DELETE_EMPLOYEE',
   READ_EMPLOYEE = 'READ_EMPLOYEE',
   UPDATE_EMPLOYEE = 'UPDATE_EMPLOYEE',
+
+  // ====== Roles Permissions ====== //
+  CREATE_ROLE = 'CREATE_ROLE',
+  DELETE_ROLE = 'DELETE_ROLE',
+  READ_ROLE = 'READ_ROLE',
+  UPDATE_ROLE = 'UPDATE_ROLE',
+
+  // ====== Roles Appointments ====== //
+  CREATE_APPOINTMENT = 'CREATE_APPOINTMENT',
+  DELETE_APPOINTMENT = 'DELETE_APPOINTMENT',
+  READ_APPOINTMENT = 'READ_APPOINTMENT',
+  UPDATE_APPOINTMENT = 'UPDATE_APPOINTMENT',
 }

@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { DataErrorMessage } from 'src/message-handling/data-error-message';
 import { SuccessDeleteMessage } from 'src/message-handling/success-delete.message';
@@ -49,7 +50,7 @@ export class RoleController {
     try {
       const createdPermission: any = await this.roleService.addPermissionToRole(
         id,
-        body.permissions,
+        body,
       );
 
       const successRequest = new SuccessPostMessage();
@@ -63,13 +64,31 @@ export class RoleController {
     }
   }
 
+  @Get('permission/list/:module')
+  async permissionListByModule(@Param('module') module: string) {
+    try {
+      const createdPermission: any = await this.roleService.permissionListByModule(
+        module,
+      );
+
+      const successRequest = new SuccessPostMessage();
+      successRequest.data = createdPermission;
+      return successRequest;
+    } catch (e) {
+      const errorException = new DataErrorMessage();
+      errorException.errorData = e;
+
+      return errorException;
+    }
+  }
+
   //====== Roles ======//
   @Post('/create')
-  async createTurn(@Body() body: RoleDto) {
+  async createRole(@Body() body: RoleDto) {
     try {
-      const createdTurn: any = await this.roleService.create(body);
+      const createdRole: any = await this.roleService.create(body);
       const successRequest = new SuccessPostMessage();
-      successRequest.data = createdTurn._doc;
+      successRequest.data = createdRole._doc;
       return successRequest;
     } catch (e) {
       const errorException = new DataErrorMessage();
@@ -80,11 +99,11 @@ export class RoleController {
   }
 
   @Get('/list')
-  async getTurns() {
+  async getRoles(@Query('searchTerm') searchTerm: string) {
     try {
-      const TurnList = await this.roleService.list();
+      const RoleList = await this.roleService.list(searchTerm);
       const successRequest = new SuccessPostMessage();
-      successRequest.data = TurnList;
+      successRequest.data = RoleList;
 
       return successRequest;
     } catch (e) {
@@ -96,11 +115,11 @@ export class RoleController {
   }
 
   @Get(':id')
-  async getTurn(@Param('id') id: string) {
+  async getRole(@Param('id') id: string) {
     try {
-      const turn: any = await this.roleService.findById(id);
+      const role: any = await this.roleService.findById(id);
       const successRequest = new SuccessPostMessage();
-      successRequest.data = turn._doc;
+      successRequest.data = role._doc;
 
       return successRequest;
     } catch (e) {
@@ -112,13 +131,13 @@ export class RoleController {
   }
 
   @Delete(':id')
-  async deleteTurn(@Param('id') id: string) {
+  async deleteRole(@Param('id') id: string) {
     try {
-      const deletedTurn = await this.roleService.delete(id);
+      const deletedRole = await this.roleService.delete(id);
       const successRequest = new SuccessDeleteMessage();
       successRequest.data = { _id: id };
 
-      if (deletedTurn.deletedCount === 0) {
+      if (deletedRole.deletedCount === 0) {
         successRequest.customMessage = 'zero';
       }
 
@@ -137,12 +156,12 @@ export class RoleController {
   }
 
   @Patch(':id')
-  async updateTurn(@Param('id') id: string, @Body() body: RoleDto) {
+  async updateRole(@Param('id') id: string, @Body() body: RoleDto) {
     try {
-      const patchedTurn = await this.roleService.update(id, body);
+      const patchedRole = await this.roleService.update(id, body);
       const successRequest = new SuccessPostMessage();
       const modifiedData = {
-        updatedTurn: patchedTurn.nModified,
+        updatedRole: patchedRole.nModified,
         requestedId: id,
       };
 

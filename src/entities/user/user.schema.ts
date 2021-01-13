@@ -11,6 +11,7 @@ export type UserDocument = User & Document;
 export class User {
   @Prop({
     required: [true, 'El email es requerido'],
+    unique: true,
   })
   email: string;
 
@@ -21,6 +22,7 @@ export class User {
 
   @Prop({
     required: [true, 'El nombre de usuario es requerido'],
+    unique: true,
   })
   userName: string;
 
