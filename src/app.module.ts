@@ -10,6 +10,11 @@ import { TurnModule } from './entities/turn/turn.module';
 import { JobTitleModule } from './entities/job-title/job-title.module';
 import { RoleModule } from './entities/role/role.module';
 import { CustomerModule } from './entities/customer/customer.module';
+import { SurgeryModule } from './entities/surgery/surgery.module';
+import { AllergyModule } from './entities/allergy/allergy.module';
+import { VaccineModule } from './entities/vaccine/vaccine.module';
+import { MedicineModule } from './entities/medicine/medicine.module';
+import { DiseaseModule } from './entities/disease/disease.module';
 
 @Module({
   imports: [
@@ -37,6 +42,11 @@ import { CustomerModule } from './entities/customer/customer.module';
     JobTitleModule,
     RoleModule,
     CustomerModule,
+    SurgeryModule,
+    AllergyModule,
+    VaccineModule,
+    MedicineModule,
+    DiseaseModule,
   ],
   controllers: [AppController],
   providers: [AppService],
