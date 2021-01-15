@@ -125,11 +125,16 @@ export class RoleService {
     return createdRole.save();
   }
 
-  async list(params?: any): Promise<Role[]> {
+  async list(params?: string): Promise<Role[]> {
+    const searchQuery = {
+      name: {
+        $regex: new RegExp(params, 'i'),
+      },
+    };
+
     return this.roleModel
-      .find({ name: { $regex: new RegExp(params, 'i') } })
-      .populate('permissions')
-      .exec();
+      .find(params === 'undefined' ? {} : searchQuery)
+      .populate('permissions');
   }
 
   async findById(id): Promise<Role> {
