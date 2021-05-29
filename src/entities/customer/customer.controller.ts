@@ -7,23 +7,30 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { PermissionsGuard } from 'src/auth/guards/permissions.guard';
+import { RequirePermissions } from 'src/decorators/require-permissions.decorator';
+import { Permissions } from 'src/enums/permissions.enum';
 import { DataErrorMessage } from 'src/message-handling/data-error-message';
 import { SuccessDeleteMessage } from 'src/message-handling/success-delete.message';
 import { SuccessPostMessage } from 'src/message-handling/success-post.message';
-import { JobTitleDto } from './dtos/job-title.dto';
-import { JobTitleService } from './job-title.service';
+import { CustomerService } from './customer.service';
+import { CustomerDto } from './dtos/customer.dto';
 
-@Controller('job-title')
-export class JobTitleController {
-  constructor(private readonly jobTitleService: JobTitleService) {}
+@Controller('customer')
+export class CustomerController {
+  constructor(private readonly customerService: CustomerService) {}
 
   @Post('/create')
-  async createJobTitles(@Body() body: JobTitleDto) {
+  @RequirePermissions(Permissions.CREATE_EMPLOYEE)
+  // @UseGuards(JwtAuthGuard, PermissionsGuard)
+  async createCustomer(@Body() body: CustomerDto) {
     try {
-      const createdJobTitle: any = await this.jobTitleService.create(body);
+      const createdCustomer: any = await this.customerService.create(body);
       const successRequest = new SuccessPostMessage();
-      successRequest.data = createdJobTitle._doc;
+      successRequest.data = createdCustomer._doc;
       return successRequest;
     } catch (e) {
       const errorException = new DataErrorMessage();
@@ -34,11 +41,13 @@ export class JobTitleController {
   }
 
   @Get('/list')
-  async getJobTitles(@Query() queryParams) {
+  @RequirePermissions(Permissions.READ_EMPLOYEE)
+  // @UseGuards(JwtAuthGuard, PermissionsGuard)
+  async getCustomers(@Query() queryParams) {
     try {
-      const JobTitleList = await this.jobTitleService.list(queryParams);
+      const CustomerList = await this.customerService.list(queryParams);
       const successRequest = new SuccessPostMessage();
-      successRequest.data = JobTitleList;
+      successRequest.data = CustomerList;
 
       return successRequest;
     } catch (e) {
@@ -50,11 +59,13 @@ export class JobTitleController {
   }
 
   @Get(':id')
-  async getJobTitle(@Param('id') id: string) {
+  // @RequirePermissions(Permissions.READ_EMPLOYEE)
+  // @UseGuards(JwtAuthGuard, PermissionsGuard)
+  async getCustomer(@Param('id') id: string) {
     try {
-      const jobTitle: any = await this.jobTitleService.findById(id);
+      const customer: any = await this.customerService.findById(id);
       const successRequest = new SuccessPostMessage();
-      successRequest.data = jobTitle._doc;
+      successRequest.data = customer._doc;
 
       return successRequest;
     } catch (e) {
@@ -65,14 +76,16 @@ export class JobTitleController {
     }
   }
 
+  @RequirePermissions(Permissions.DELETE_EMPLOYEE)
+  // @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Delete(':id')
-  async deleteJobTitle(@Param('id') id: string) {
+  async deleteCustomer(@Param('id') id: string) {
     try {
-      const deletedJobTitle = await this.jobTitleService.delete(id);
+      const deletedCustomer = await this.customerService.delete(id);
       const successRequest = new SuccessDeleteMessage();
       successRequest.data = { _id: id };
 
-      if (deletedJobTitle.deletedCount === 0) {
+      if (deletedCustomer.deletedCount === 0) {
         successRequest.customMessage = 'zero';
       }
 
@@ -90,13 +103,15 @@ export class JobTitleController {
     }
   }
 
+  @RequirePermissions(Permissions.UPDATE_EMPLOYEE)
+  // @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Patch(':id')
-  async updateJobTitle(@Param('id') id: string, @Body() body: JobTitleDto) {
+  async updateCustomer(@Param('id') id: string, @Body() body: CustomerDto) {
     try {
-      const patchedJobTitle = await this.jobTitleService.update(id, body);
+      const patchedCustomer = await this.customerService.update(id, body);
       const successRequest = new SuccessPostMessage();
       const modifiedData = {
-        updatedTurn: patchedJobTitle.nModified,
+        updatedEmployee: patchedCustomer.nModified,
         requestedId: id,
       };
 

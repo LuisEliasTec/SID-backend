@@ -1,5 +1,5 @@
 export class TurnDto {
   name: string;
-  startHour: string;
-  endHour: string;
+  startHour: Date;
+  endHour: Date;
 }

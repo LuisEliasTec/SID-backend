@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { EmployeeDto } from './dtos/employee.dto';
 import { Employee, EmployeeDocument } from './models/employee.schema';
+import { paginator } from 'src/utils/paginator.util';
 
 @Injectable()
 export class EmployeeService {
@@ -15,8 +16,14 @@ export class EmployeeService {
     return createdEmployee.save();
   }
 
-  async list(): Promise<Employee[]> {
-    return this.employeeModel.find().exec();
+  // async list(): Promise<Employee[]> {
+  //   return this.employeeModel.find().exec();
+  // }
+
+  async list(queryParams): Promise<any> {
+    const { page, pageSize } = queryParams;
+
+    return paginator(this.employeeModel, parseInt(page), parseInt(pageSize));
   }
 
   async findById(id): Promise<Employee> {

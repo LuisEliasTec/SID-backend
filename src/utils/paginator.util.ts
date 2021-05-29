@@ -9,6 +9,7 @@ export const paginator = async (
 
   result.currentPage = page;
   result.data = await model.find({}).limit(itemsPerPage).skip(itemsToSkip);
+  // .sort({ userName: 'asc' });
 
   result.totalPages = Math.ceil(result.total / itemsPerPage);
   result.pageSize = itemsPerPage;

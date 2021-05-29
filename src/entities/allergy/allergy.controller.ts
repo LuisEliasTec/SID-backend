@@ -11,102 +11,90 @@ import {
 import { DataErrorMessage } from 'src/message-handling/data-error-message';
 import { SuccessDeleteMessage } from 'src/message-handling/success-delete.message';
 import { SuccessPostMessage } from 'src/message-handling/success-post.message';
-import { JobTitleDto } from './dtos/job-title.dto';
-import { JobTitleService } from './job-title.service';
+import { AllergyService } from './allergy.service';
+import { AllergyDto } from './dtos/allergy.dto';
 
-@Controller('job-title')
-export class JobTitleController {
-  constructor(private readonly jobTitleService: JobTitleService) {}
+@Controller('allergy')
+export class AllergyController {
+  constructor(private readonly allergyService: AllergyService) {}
 
   @Post('/create')
-  async createJobTitles(@Body() body: JobTitleDto) {
+  async createAllergies(@Body() body: AllergyDto) {
     try {
-      const createdJobTitle: any = await this.jobTitleService.create(body);
+      const createdAllergy: any = await this.allergyService.create(body);
       const successRequest = new SuccessPostMessage();
-      successRequest.data = createdJobTitle._doc;
+      successRequest.data = createdAllergy._doc;
       return successRequest;
     } catch (e) {
       const errorException = new DataErrorMessage();
       errorException.errorData = e;
-
       return errorException;
     }
   }
 
   @Get('/list')
-  async getJobTitles(@Query() queryParams) {
+  async getAllergies(@Query() queryParams) {
     try {
-      const JobTitleList = await this.jobTitleService.list(queryParams);
+      const allergiesList = await this.allergyService.list(queryParams);
       const successRequest = new SuccessPostMessage();
-      successRequest.data = JobTitleList;
-
+      successRequest.data = allergiesList;
       return successRequest;
     } catch (e) {
       const errorException = new DataErrorMessage();
       errorException.errorData = e;
-
       return errorException;
     }
   }
 
   @Get(':id')
-  async getJobTitle(@Param('id') id: string) {
+  async getAllergy(@Param('id') id: string) {
     try {
-      const jobTitle: any = await this.jobTitleService.findById(id);
+      const allergy: any = await this.allergyService.findById(id);
       const successRequest = new SuccessPostMessage();
-      successRequest.data = jobTitle._doc;
-
+      successRequest.data = allergy._doc;
       return successRequest;
     } catch (e) {
       const errorException = new DataErrorMessage();
       errorException.errorData = e;
-
       return errorException;
     }
   }
 
   @Delete(':id')
-  async deleteJobTitle(@Param('id') id: string) {
+  async deleteAllergy(@Param('id') id: string) {
     try {
-      const deletedJobTitle = await this.jobTitleService.delete(id);
+      const deletedAllergy = await this.allergyService.delete(id);
       const successRequest = new SuccessDeleteMessage();
       successRequest.data = { _id: id };
-
-      if (deletedJobTitle.deletedCount === 0) {
+      if (deletedAllergy.deletedCount === 0) {
         successRequest.customMessage = 'zero';
       }
-
       return successRequest;
     } catch (e) {
       const errorException = new DataErrorMessage();
-
       if (e.kind === 'ObjectId') {
         errorException.message = e.reason.message;
       } else {
         errorException.errorData = e;
       }
-
       return errorException;
     }
   }
 
   @Patch(':id')
-  async updateJobTitle(@Param('id') id: string, @Body() body: JobTitleDto) {
+  async updateAllergy(@Param('id') id: string, @Body() body: AllergyDto) {
     try {
-      const patchedJobTitle = await this.jobTitleService.update(id, body);
+      const patchedAllergy = await this.allergyService.update(id, body);
       const successRequest = new SuccessPostMessage();
       const modifiedData = {
-        updatedTurn: patchedJobTitle.nModified,
+        updatedTurn: patchedAllergy.nModified,
         requestedId: id,
       };
-
       successRequest.data = modifiedData;
-
       return successRequest;
     } catch (e) {
       const errorException = new DataErrorMessage();
       errorException.errorData = e;
-
       return errorException;
     }
   }

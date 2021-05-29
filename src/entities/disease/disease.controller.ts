@@ -11,102 +11,90 @@ import {
 import { DataErrorMessage } from 'src/message-handling/data-error-message';
 import { SuccessDeleteMessage } from 'src/message-handling/success-delete.message';
 import { SuccessPostMessage } from 'src/message-handling/success-post.message';
-import { JobTitleDto } from './dtos/job-title.dto';
-import { JobTitleService } from './job-title.service';
+import { DiseaseService } from './disease.service';
+import { DiseaseDto } from './dtos/disease.dto';
 
-@Controller('job-title')
-export class JobTitleController {
-  constructor(private readonly jobTitleService: JobTitleService) {}
+@Controller('disease')
+export class DiseaseController {
+  constructor(private readonly diseaseService: DiseaseService) {}
 
   @Post('/create')
-  async createJobTitles(@Body() body: JobTitleDto) {
+  async createDisease(@Body() body: DiseaseDto) {
     try {
-      const createdJobTitle: any = await this.jobTitleService.create(body);
+      const createdDisease: any = await this.diseaseService.create(body);
       const successRequest = new SuccessPostMessage();
-      successRequest.data = createdJobTitle._doc;
+      successRequest.data = createdDisease._doc;
       return successRequest;
     } catch (e) {
       const errorException = new DataErrorMessage();
       errorException.errorData = e;
-
       return errorException;
     }
   }
 
   @Get('/list')
-  async getJobTitles(@Query() queryParams) {
+  async getDiseases(@Query() queryParams) {
     try {
-      const JobTitleList = await this.jobTitleService.list(queryParams);
+      const diseasesList = await this.diseaseService.list(queryParams);
       const successRequest = new SuccessPostMessage();
-      successRequest.data = JobTitleList;
-
+      successRequest.data = diseasesList;
       return successRequest;
     } catch (e) {
       const errorException = new DataErrorMessage();
       errorException.errorData = e;
-
       return errorException;
     }
   }
 
   @Get(':id')
-  async getJobTitle(@Param('id') id: string) {
+  async getDisease(@Param('id') id: string) {
     try {
-      const jobTitle: any = await this.jobTitleService.findById(id);
+      const disease: any = await this.diseaseService.findById(id);
       const successRequest = new SuccessPostMessage();
-      successRequest.data = jobTitle._doc;
-
+      successRequest.data = disease._doc;
       return successRequest;
     } catch (e) {
       const errorException = new DataErrorMessage();
       errorException.errorData = e;
-
       return errorException;
     }
   }
 
   @Delete(':id')
-  async deleteJobTitle(@Param('id') id: string) {
+  async deleteDisease(@Param('id') id: string) {
     try {
-      const deletedJobTitle = await this.jobTitleService.delete(id);
+      const deletedDisease = await this.diseaseService.delete(id);
       const successRequest = new SuccessDeleteMessage();
       successRequest.data = { _id: id };
-
-      if (deletedJobTitle.deletedCount === 0) {
+      if (deletedDisease.deletedCount === 0) {
         successRequest.customMessage = 'zero';
       }
-
       return successRequest;
     } catch (e) {
       const errorException = new DataErrorMessage();
-
       if (e.kind === 'ObjectId') {
         errorException.message = e.reason.message;
       } else {
         errorException.errorData = e;
       }
-
       return errorException;
     }
   }
 
   @Patch(':id')
-  async updateJobTitle(@Param('id') id: string, @Body() body: JobTitleDto) {
+  async updateDisease(@Param('id') id: string, @Body() body: DiseaseDto) {
     try {
-      const patchedJobTitle = await this.jobTitleService.update(id, body);
+      const patchedDisease = await this.diseaseService.update(id, body);
       const successRequest = new SuccessPostMessage();
       const modifiedData = {
-        updatedTurn: patchedJobTitle.nModified,
+        updatedDisease: patchedDisease.nModified,
         requestedId: id,
       };
-
       successRequest.data = modifiedData;
-
       return successRequest;
     } catch (e) {
       const errorException = new DataErrorMessage();
       errorException.errorData = e;
-
       return errorException;
     }
   }
